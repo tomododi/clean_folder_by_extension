@@ -1,30 +1,33 @@
-import os
-import tkinter as tk
+from organize import organize_folder
 from tkinter import filedialog
-
-def sort_files():
-    root.withdraw()
-    folder_path = filedialog.askdirectory()
-
-    subfolders = {}
-
-    for filename in os.listdir(folder_path):
-        extension = os.path.splitext(filename)[1][1:]
-
-        if extension not in subfolders:
-            subfolder_path = os.path.join(folder_path, extension)
-            os.mkdir(subfolder_path)
-            subfolders[extension] = subfolder_path
-
-        file_path = os.path.join(folder_path, filename)
-        os.rename(file_path, os.path.join(subfolders[extension], filename))
+from organize import organize_folder
+from tkinter import *
 
 
 
-root = tk.Tk()
-root.title("File Sorter")
 
-sort_button = tk.Button(root, text="Sort Files", command=sort_files)
-sort_button.pack()
+root = Tk()
+root.title("Folder Cleaner")
+root.geometry("300x150")
+
+folder_path_var = StringVar()
+folder_path_entry = Entry(root, textvariable=folder_path_var, width=30)
+folder_path_entry.pack()
+
+def select_folder():
+    folder_selected = filedialog.askdirectory()
+    folder_path_var.set(folder_selected)
+
+select_folder_button = Button(root, text = "Select Folder", command = select_folder)
+select_folder_button.pack()
+
+def on_clean():
+    folder_path = folder_path_var.get()
+    organize_folder(folder_path)
+    
+clean_button = Button(root, text = "Clean Folder", command = on_clean)
+clean_button.pack()
+
+
 
 root.mainloop()
