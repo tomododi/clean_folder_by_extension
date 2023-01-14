@@ -1,5 +1,6 @@
-from organize import organize_folder
+from organizeByExtAndDate import organize_folder_both
 from tkinter import filedialog
+from organizeByDate import organize_folder_by_date
 from organize import organize_folder
 from tkinter import *
 
